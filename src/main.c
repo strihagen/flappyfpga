@@ -1,89 +1,21 @@
 /* main.c
 
-   This file written 2024 by Artur Podobas and Pedro Antunes
+    Author: Eric Strihagen
+    Date: 2025-10-25
 
    For copyright and licensing, see file COPYING */
 
-/* Below functions are external and found in other files. */
-extern void print(const char *);
-extern void print_dec(unsigned int);
+#include "drivers/led.h"
+#include "drivers/segDisplay.h"
+#include "drivers/switch.h"
+#include "drivers/button.h"
+
 
 int mytime = 0x5957;
 char textstring[] = "text, more text, and even more text!";
 
-/* Below is the function that will be called when an interrupt is triggered. */
-void handle_interrupt(unsigned cause) {}
-
-void set_leds(int led_mask) {
-    volatile unsigned int *leds = (volatile unsigned int *)0x04000000;
-    *leds = led_mask;
-}
-
-void increment_leds() {
-    volatile unsigned int *leds = (volatile unsigned int *)0x04000000;
-    *leds = *leds + 1;
-}
-
-void init_leds() { set_leds(0); }
-
-void set_displays(int display_number, int value) {
-    if (display_number > 6 || display_number < 1)
-        return;
-    else if (value > 9 || value < 0)
-        return;
-    volatile unsigned int *display =
-        (volatile unsigned int *)(0x4000050 + (display_number - 1) * 0x10);
-
-    // Segment encoding: 0 = on, 1 = off
-    static const unsigned int segments[10] = {
-        0b11000000,  // 0
-        0b11111001,  // 1
-        0b10100100,  // 2
-        0b10110000,  // 3
-        0b10011001,  // 4
-        0b10010010,  // 5
-        0b10000010,  // 6
-        0b11111000,  // 7
-        0b10000000,  // 8
-        0b10010000   // 9
-    };
-
-    *display = segments[value];
-}
-
-void init_displays() {
-    volatile unsigned int *display = (volatile unsigned int *)0x04000050;
-    for (int i = 0; i < 6; i++) {
-        display[i] = 0xFF;
-    }
-}
-
-int get_sw(void) {
-    volatile unsigned int *sw = (volatile unsigned int *)0x04000010;
-    return (*sw & 0x3FF);  // return 10 least significant bits
-}
-
-int get_btn(void) {
-    volatile unsigned int *btn = (volatile unsigned int *)0x040000d0;
-    return (*btn & 0x1);  // return 1 least significant bit
-}
-
-void init_vga(void) {
-    volatile unsigned int *vga = (volatile unsigned int *)0x04000050;
-    for (int i = 0; i < 6; i++) {
-        vga[i] = 0xFF;
-    }
-}
-
-/* Add your code here for initializing interrupts. */
-void labinit(void) {}
-
-/* Your code goes into main as well as any needed functions. */
 int main() {
-    // Call labinit()
-    init_vga();
-    labinit();
-    volatile unsigned int *leds = (volatile unsigned int *)0x04000000;
+    volatile unsigned int *leds = (volatile unsigned int *)_LED_BASE;
 
     // Call init_leds()
     init_leds();
