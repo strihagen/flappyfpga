@@ -8,15 +8,12 @@
 
 #include "drivers/led.h"
 #include "drivers/segDisplay.h"
+#include "drivers/switch.h"
+#include "drivers/button.h"
 
 
 int mytime = 0x5957;
 char textstring[] = "text, more text, and even more text!";
-
-int get_sw(void) {
-    volatile unsigned int *sw = (volatile unsigned int *)0x04000010;
-    return (*sw & 0x3FF);  // return 10 least significant bits
-}
 
 int get_btn(void) {
     volatile unsigned int *btn = (volatile unsigned int *)0x040000d0;
