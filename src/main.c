@@ -1,10 +1,9 @@
 /* main.c
 
-   This file written 2024 by Artur Podobas and Pedro Antunes
+    Author: Eric Strihagen
+    Date: 2025-10-25
 
    For copyright and licensing, see file COPYING */
-
-/* Below functions are external and found in other files. */
 
 #include "drivers/led.h"
 #include "drivers/segDisplay.h"
@@ -15,21 +14,7 @@
 int mytime = 0x5957;
 char textstring[] = "text, more text, and even more text!";
 
-void init_vga(void) {
-    volatile unsigned int *vga = (volatile unsigned int *)0x04000050;
-    for (int i = 0; i < 6; i++) {
-        vga[i] = 0xFF;
-    }
-}
-
-/* Add your code here for initializing interrupts. */
-void labinit(void) {}
-
-/* Your code goes into main as well as any needed functions. */
 int main() {
-    // Call labinit()
-    init_vga();
-    labinit();
     volatile unsigned int *leds = (volatile unsigned int *)_LED_BASE;
 
     // Call init_leds()
