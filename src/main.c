@@ -15,11 +15,6 @@
 int mytime = 0x5957;
 char textstring[] = "text, more text, and even more text!";
 
-int get_btn(void) {
-    volatile unsigned int *btn = (volatile unsigned int *)0x040000d0;
-    return (*btn & 0x1);  // return 1 least significant bit
-}
-
 void init_vga(void) {
     volatile unsigned int *vga = (volatile unsigned int *)0x04000050;
     for (int i = 0; i < 6; i++) {
