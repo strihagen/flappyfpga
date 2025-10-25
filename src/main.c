@@ -11,9 +11,6 @@ extern void print_dec(unsigned int);
 int mytime = 0x5957;
 char textstring[] = "text, more text, and even more text!";
 
-/* Below is the function that will be called when an interrupt is triggered. */
-void handle_interrupt(unsigned cause) {}
-
 void set_leds(int led_mask) {
     volatile unsigned int *leds = (volatile unsigned int *)0x04000000;
     *leds = led_mask;

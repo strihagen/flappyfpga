@@ -30,4 +30,13 @@ void handle_exception ( unsigned arg0, unsigned arg1, unsigned arg2, unsigned ar
 }
 
 
+/* Interrupt Handler
+ * Description: This code handles an interrupt.
+ * Param cause: The interrupt cause.
+*/
+void handle_interrupt(unsigned cause) {}
+
+
+
+
 
