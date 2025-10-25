@@ -7,42 +7,11 @@
 /* Below functions are external and found in other files. */
 
 #include "drivers/led.h"
+#include "drivers/segDisplay.h"
 
 
 int mytime = 0x5957;
 char textstring[] = "text, more text, and even more text!";
-
-void set_displays(int display_number, int value) {
-    if (display_number > 6 || display_number < 1)
-        return;
-    else if (value > 9 || value < 0)
-        return;
-    volatile unsigned int *display =
-        (volatile unsigned int *)(0x4000050 + (display_number - 1) * 0x10);
-
-    // Segment encoding: 0 = on, 1 = off
-    static const unsigned int segments[10] = {
-        0b11000000,  // 0
-        0b11111001,  // 1
-        0b10100100,  // 2
-        0b10110000,  // 3
-        0b10011001,  // 4
-        0b10010010,  // 5
-        0b10000010,  // 6
-        0b11111000,  // 7
-        0b10000000,  // 8
-        0b10010000   // 9
-    };
-
-    *display = segments[value];
-}
-
-void init_displays() {
-    volatile unsigned int *display = (volatile unsigned int *)0x04000050;
-    for (int i = 0; i < 6; i++) {
-        display[i] = 0xFF;
-    }
-}
 
 int get_sw(void) {
     volatile unsigned int *sw = (volatile unsigned int *)0x04000010;
