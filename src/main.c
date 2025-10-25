@@ -6,20 +6,11 @@
 
 /* Below functions are external and found in other files. */
 
+#include "drivers/led.h"
+
+
 int mytime = 0x5957;
 char textstring[] = "text, more text, and even more text!";
-
-void set_leds(int led_mask) {
-    volatile unsigned int *leds = (volatile unsigned int *)0x04000000;
-    *leds = led_mask;
-}
-
-void increment_leds() {
-    volatile unsigned int *leds = (volatile unsigned int *)0x04000000;
-    *leds = *leds + 1;
-}
-
-void init_leds() { set_leds(0); }
 
 void set_displays(int display_number, int value) {
     if (display_number > 6 || display_number < 1)
@@ -78,7 +69,7 @@ int main() {
     // Call labinit()
     init_vga();
     labinit();
-    volatile unsigned int *leds = (volatile unsigned int *)0x04000000;
+    volatile unsigned int *leds = (volatile unsigned int *)_LED_BASE;
 
     // Call init_leds()
     init_leds();
