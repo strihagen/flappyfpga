@@ -5,8 +5,6 @@
    For copyright and licensing, see file COPYING */
 
 /* Below functions are external and found in other files. */
-extern void print(const char *);
-extern void print_dec(unsigned int);
 
 int mytime = 0x5957;
 char textstring[] = "text, more text, and even more text!";
