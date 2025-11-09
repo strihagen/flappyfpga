@@ -5,11 +5,17 @@ welcome_msg: .asciz "================================================\n===== RIS
 .section .text
 .align 2
 .globl _start
+.extern _isr_handler
 
 /* This is where the application starts */
 _start:
 	// Set the stack point to somewhere free in the main memory
 	csrw mie, x0
+
+    // Set the exception vector
+    la   t0, _isr_handler
+    csrw mtvec, t0
+
 	la sp, _stack_end
 	la gp, __global_pointer
 	la a0, welcome_msg
