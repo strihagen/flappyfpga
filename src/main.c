@@ -9,12 +9,15 @@
 #include "drivers/segDisplay.h"
 #include "drivers/switch.h"
 #include "drivers/button.h"
-
+#include "drivers/vga.h"
 
 int mytime = 0x5957;
 char textstring[] = "text, more text, and even more text!";
 
 int main() {
+    // Call test_vga()
+    test_vga();
+
     volatile unsigned int *leds = (volatile unsigned int *)_LED_BASE;
 
     // Call init_leds()
