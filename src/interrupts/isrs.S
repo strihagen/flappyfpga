@@ -2,6 +2,9 @@
 .align 2
 .globl _isr_handler
 .globl _isr_routine
+.extern _start
+.extern handle_interrupt
+.extern handle_exception
 
 _isr_handler:
 	j _isr_routine	   /* ISR service routine here */
