@@ -5,13 +5,15 @@
  * Switch driver
  *
  * Author: Eric Strihagen
- * Date: 2025-10-25
+ * Date: 2025-11-10
  *
  */
 
+#include <stdint.h>
 
 #define _SWITCH_BASE 0x04000010
-int get_sw(void);
+
+uint32_t sw_get(void);
 
 
 #endif // __DRIVERS_SWITCH_H__

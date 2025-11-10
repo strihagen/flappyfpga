@@ -1,18 +1,20 @@
-#ifndef __SEGMENT_DISPLAY_H_
-#define __SEGMENT_DISPLAY_H_
+#ifndef __DRIVERS_SEGMENT_DISPLAY_H_
+#define __DRIVERS_SEGMENT_DISPLAY_H_
 
 /*
  * 7-segment display driver
  *
  * Author: Eric Strihagen
- * Date: 2025-10-25
+ * Date: 2025-11-10
  *
  */
+
+#include <stdint.h>
 
 #define _7SEGMENT_DISPLAY_BASE 0x4000050
 
 // Segment encoding: 0 = on, 1 = off
-static const unsigned int segments[10] = {
+static const uint32_t segments[10] = {
         0b11000000,  // 0
         0b11111001,  // 1
         0b10100100,  // 2
@@ -25,7 +27,7 @@ static const unsigned int segments[10] = {
         0b10010000   // 9
 };
 
-void set_displays(int display_number, int value);
-void init_displays();
+void seg_display_init();
+void seg_display_set(uint32_t display_number, uint32_t value);
 
-#endif // __SEGMENT_DISPLAY_H_
+#endif // __DRIVERS_SEGMENT_DISPLAY_H_
