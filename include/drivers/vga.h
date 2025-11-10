@@ -5,7 +5,7 @@
  * VGA driver
  *
  * Author: Eric Strihagen
- * Date: 2025-11-08
+ * Date: 2025-11-10
  *
  */
 
@@ -21,22 +21,30 @@
 #define DMA_ADDR          ((volatile uint32_t*)0x04000100)
 
 
-// Color
+/*  Color struct
+ *   8 bits
+    * Red: 3 bits MSB
+    * Green: 3 bits
+    * Blue: 2 bits LSB
+*/
 typedef struct {
     uint8_t value;
-} Color;
+} color_t;
 
 
 // Initialize VGA
-void init_vga();
+void vga_init();
 
 // Create a color (3 bits red, 3 bits green, 2 bits blue)
-Color color_new(uint8_t r, uint8_t g, uint8_t b);
+color_t vga_color_new(uint8_t r, uint8_t g, uint8_t b);
 
 // Set pixel at (x, y) to color
-void set_pixel(int x, int y, Color color);
+void vga_set_pixel(uint16_t x, uint16_t y, const color_t color);
+
+// Swap front and back buffers
+void vga_swap_buffers();
 
 // Simple test: fill screen with a color gradient
-void test_vga();
+void vga_test();
 
 #endif
