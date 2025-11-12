@@ -14,6 +14,6 @@
 
 void timer_interrupt_handler() {
     timer_increment_ticks();
-    timer_clear_time_out_flag();
+    timer_clear_timeout_flag();
 }
 
