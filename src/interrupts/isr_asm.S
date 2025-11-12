@@ -2,7 +2,6 @@
 .align 2
 .globl _isr_handler
 .globl _isr_routine
-.globl enable_interrupts
 .extern _start
 .extern handle_interrupt
 .extern handle_exception
@@ -113,7 +112,3 @@ restore:
 	// Return from interrupt
 	mret
 
-enable_interrupts:
-    csrsi mie, 16 // Enable Timer interrupt
-    csrsi mstatus, 3 // Enable interrupts
-    jr ra

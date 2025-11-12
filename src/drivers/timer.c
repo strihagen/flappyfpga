@@ -2,13 +2,14 @@
  *
  * File: timer.c
  * Author: Eric Strihagen
- * Date: 2025-11-11
+ * Date: 2025-11-12
  *
  * Declaration file: drivers/timer.h
  */
 
 #include "drivers/timer.h"
 #include "interrupts/isr.h"
+#include "system/system.h"
 
 #include <stdint.h>
 
@@ -16,7 +17,14 @@
 static volatile timer_t* const TIMER = (volatile timer_t*)_TIMER_BASE;
 //#define TIMER ((volatile timer_t *) _TIMER_BASE) // Becomes the same as above
 
+/*
+ * Timer Tick Counter
+ * Used to count the number of timer ticks
+ * The interrupt handler increments this counter every time it is called,
+ * via timer_increment_ticks()
+ */
 static volatile uint32_t timer_ticks = 0;
+
 
 
 /* Timer Initialization
@@ -30,7 +38,8 @@ void timer_init() {
     TIMER->period_hi = (period >> 16) & 0xFFFF;
 
     timer_enable();
-    enable_interrupts();
+    system_enable_irq(INTERRUPT_TIMER_IRQ);
+    system_enable_mie_interrupts();
 }
 
 /* Timer Disable
