@@ -1,15 +1,19 @@
-#include "print.h"
-#include "interrupts/timer_handler.h"
-
 /*
  * Interrupt Service Routines
  *
  * File: isr.c
  * Author: Eric Strihagen
- * Date: 2025-11-11
+ * Date: 2025-11-12
  *
  * Declaration file: interrupts/isr.h
 */
+
+
+#include "interrupts/isr.h"
+#include "interrupts/timer_handler.h"
+
+#include "print.h"
+
 
 /* function: handle_exception
    Description: This code handles an exception. */
@@ -47,7 +51,7 @@ void handle_exception ( unsigned arg0, unsigned arg1, unsigned arg2, unsigned ar
 */
 void handle_interrupt(unsigned cause) {
     switch (cause) {
-        case TIMER_INTERRUPT_ID:
+        case INTERRUPT_TIMER_IRQ:
             timer_interrupt_handler();
             break;
         default:
@@ -55,8 +59,4 @@ void handle_interrupt(unsigned cause) {
             break;
     }
 }
-
-
-
-
 

@@ -5,12 +5,10 @@
  * Timer handler
  *
  * Author: Eric Strihagen
- * Date: 2025-11-10
+ * Date: 2025-11-12
  *
  */
 #include <stdint.h>
-
-#define TIMER_INTERRUPT_ID 16
 
 void timer_interrupt_handler();
 
