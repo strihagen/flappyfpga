@@ -2,7 +2,7 @@
  *
  * File: timer.c
  * Author: Eric Strihagen
- * Date: 2025-11-12
+ * Date: 2025-11-13
  *
  * Declaration file: drivers/timer.h
  */
@@ -33,9 +33,7 @@ static volatile uint32_t timer_ticks = 0;
  *               and enable timer interrupts, and system interrupts
 */
 void timer_init() {
-    uint32_t period = _TIMER_DEFAULT_PERIOD;  // 10 Hz / 100 ms
-    TIMER->period_lo = period & 0xFFFF;
-    TIMER->period_hi = (period >> 16) & 0xFFFF;
+    timer_set_period(_TIMER_DEFAULT_PERIOD);
 
     timer_enable();
     system_enable_irq(INTERRUPT_TIMER_IRQ);
