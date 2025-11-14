@@ -20,9 +20,9 @@
 /*
  * Timer Register map
  *
- * Address          | Access| 15 14 13 12 11 10 9 8 7 6 5 |  3  |  2 |  1 | 0  |
- * 0 STATUS         |  R/W  |        -RESERVED-           |     |    |RUN |TO  |
- * 1 CONTROL        |  R/W  |        -RESERVED-           |START|STOP|CONT|ITO |
+ * Address          | Access| 15 14 13 12 11 10 9 8 7 6 5 |  3 |  2  |  1 | 0  |
+ * 0 STATUS         |  R/W  |        -RESERVED-           |    |     |RUN |TO  |
+ * 1 CONTROL        |  R/W  |        -RESERVED-           |STOP|START|CONT|ITO |
  * 2 PERIOD LO      |  R/W  |     TIMEOUT PERIOD1 15:0
  * 3 PERIOD HI      |  R/W  |     TIMEOUT PERIOD1 31:16
  * 4 SNAPSHOT LO    |  R/W  |     COUNTER SNAPSHOT 15:0
@@ -41,10 +41,10 @@
  * RUN - Running,
  */
 typedef struct {
-    uint32_t TO : 1;       // Timeout (bit 0)
-    uint32_t RUN : 1;      // Running (bit 1)
-    uint32_t reserved0 : 14; // Reserved bits (bit 2-15)
-    uint32_t reserved1 : 16; // Reserved bits (bit 16-31)
+    volatile uint32_t TO : 1;       // Timeout (bit 0)
+    volatile uint32_t RUN : 1;      // Running (bit 1)
+    volatile uint32_t reserved0 : 14; // Reserved bits (bit 2-15)
+    volatile uint32_t reserved1 : 16; // Reserved bits (bit 16-31)
 } status_t;
 
 
@@ -57,12 +57,12 @@ typedef struct {
  * START - Start,
  */
 typedef struct {
-    uint32_t ITO : 1;      // Interrupt timeout (bit 0)
-    uint32_t CONT : 1;     // Continuous (bit 1)
-    uint32_t STOP : 1;     // Stop (bit 2)
-    uint32_t START : 1;    // Start (bit 3)
-    uint32_t reserved0 : 12; // Reserved bits (bit 4-15)
-    uint32_t reserved1 : 16; // Reserved bits (bit 16-31)
+    volatile uint32_t ITO : 1;      // Interrupt timeout (bit 0)
+    volatile uint32_t CONT : 1;     // Continuous (bit 1)
+    volatile uint32_t START : 1;    // Start (bit 2)
+    volatile uint32_t STOP : 1;     // Stop (bit 3)
+    volatile uint32_t reserved0 : 12; // Reserved bits (bit 4-15)
+    volatile uint32_t reserved1 : 16; // Reserved bits (bit 16-31)
 } control_t;
 
 /*
@@ -71,7 +71,7 @@ typedef struct {
  * Each timer has 6 16-bit registers,
  * that are 4 byte aligned
  */
-typedef struct __attribute__ ((packed)) {
+typedef struct __attribute__ ((packed)) __attribute__ ((aligned (4))) {
     volatile status_t status;        // STATUS register (2 bytes)
     volatile control_t control;      // CONTROL register (2 bytes)
     volatile uint32_t period_lo;     // PERIOD LO register (16 bits)
