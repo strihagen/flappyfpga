@@ -13,15 +13,15 @@
 
 #include <stdint.h>
 
-extern void csr_set_mie_mask(uint32_t mie_mask);
-extern void csr_clear_mie_mask(uint32_t mie_mask);
-extern void csr_set_mstatus_mask(uint32_t mstatus_mask);
-extern void csr_clear_mstatus_mask(uint32_t mstatus_mask);
+void csr_set_mie_mask(uint32_t mie_mask);
+void csr_clear_mie_mask(uint32_t mie_mask);
+void csr_set_mstatus_mask(uint32_t mstatus_mask);
+void csr_clear_mstatus_mask(uint32_t mstatus_mask);
 
-extern uint32_t csr_get_mie(void);
-extern uint32_t csr_get_mstatus(void);
+uint32_t csr_get_mie(void);
+uint32_t csr_get_mstatus(void);
 
-extern void csr_read_all_hardware_counters(hwcounters_t *hwc);
+void csr_read_all_hardware_counters(hwcounters_t *hwc);
 
 
 void csr_set_mie_bit(uint32_t bit);
