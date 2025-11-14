@@ -21,12 +21,12 @@ csr_clear_mie_mask:
 
 .globl csr_set_mstatus_mask
 csr_set_mstatus_mask:
-    csrsi mstatus, 3 // Enable interrupts, enable MIE
+    csrs mstatus, a0
     jr ra
 
 .globl csr_clear_mstatus_mask
 csr_clear_mstatus_mask:
-    csrci mstatus, 3 // Disable interrupts
+    csrc mstatus, a0
     jr ra
 
 .globl csr_get_mie
