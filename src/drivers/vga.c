@@ -40,11 +40,13 @@ void vga_swap_buffers() {
     // write to DMA register to trigger swap
     *DMA_ADDR = 0x0;
 
+
     if (CURRENT_BACK_BUFFER == BACK_BUFFER_ADDR) {
         CURRENT_BACK_BUFFER = FRONT_BUFFER_ADDR;
     } else {
         CURRENT_BACK_BUFFER = BACK_BUFFER_ADDR;
     }
+
 }
 
 // Initialize VGA buffers
@@ -75,6 +77,39 @@ void vga_set_pixel(uint16_t x, uint16_t y, const color_t color) {
 
     CURRENT_BACK_BUFFER[y * SCREEN_WIDTH + x] = color.value;
 }
+
+void vga_set_pixel_fast(uint16_t x, uint16_t y, const color_t color) {
+    CURRENT_BACK_BUFFER[y * SCREEN_WIDTH + x] = color.value;
+}
+
+void vga_fill_row_fast(uint16_t y, const color_t color) {
+    uint32_t packed = pack_color8(color.value);
+
+    // Beginning of the row in bytes
+    volatile uint32_t*row = (volatile uint32_t*)&CURRENT_BACK_BUFFER[y * SCREEN_WIDTH];
+
+    for (int i = 0; i < (SCREEN_WIDTH / 4); i += 4) {
+        row[i] = packed;
+        row[i + 1] = packed;
+        row[i + 2] = packed;
+        row[i + 3] = packed;
+    }
+}
+
+void vga_fill_screen(const color_t color) {
+    uint32_t packed = pack_color8(color.value);
+
+    volatile uint32_t *p32 = (volatile uint32_t*)CURRENT_BACK_BUFFER;
+
+    // Write 4 pixels at a time
+    for (size_t i = 0; i < (SCREEN_SIZE / 4); i += 4) {
+        p32[i] = packed;
+        p32[i + 1] = packed;
+        p32[i + 2] = packed;
+        p32[i + 3] = packed;
+    }
+}
+
 
 // Simple test: fill screen with a color gradient
 void vga_test() {

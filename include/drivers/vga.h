@@ -15,11 +15,11 @@
 
 #define SCREEN_WIDTH  320
 #define SCREEN_HEIGHT 240
+#define SCREEN_SIZE   (SCREEN_WIDTH * SCREEN_HEIGHT)
 
 #define FRONT_BUFFER_ADDR ((volatile uint8_t*)0x08000000)
 #define BACK_BUFFER_ADDR  ((volatile uint8_t*)(0x08000000 + SCREEN_WIDTH * SCREEN_HEIGHT))
 #define DMA_ADDR          ((volatile uint32_t*)0x04000100)
-
 
 /*  Color struct
  *   8 bits
@@ -31,6 +31,9 @@ typedef struct {
     uint8_t value;
 } color_t;
 
+static inline uint32_t pack_color8(uint8_t c) {
+    return (uint32_t)c * 0x01010101;
+}
 
 // Initialize VGA
 void vga_init();
@@ -44,7 +47,11 @@ void vga_set_pixel(uint16_t x, uint16_t y, const color_t color);
 // Swap front and back buffers
 void vga_swap_buffers();
 
+void vga_fill_screen(const color_t color);
+
 // Simple test: fill screen with a color gradient
 void vga_test();
+
+void vga_fill_row_fast(uint16_t y, const color_t color);
 
 #endif

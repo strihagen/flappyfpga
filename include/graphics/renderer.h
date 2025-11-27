@@ -13,12 +13,7 @@
  */
 
 #include "drivers/vga.h"
-
-typedef struct {
-    int x, y;
-    int width, height;
-    const uint8_t *bitmap; // optional sprite bitmap
-} sprite_t;
+#include "graphics/sprite.h"
 
 // Initialize renderer (sets up VGA and clears screen)
 void renderer_init();
