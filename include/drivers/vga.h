@@ -5,7 +5,7 @@
  * VGA driver
  *
  * Author: Eric Strihagen
- * Date: 2025-11-10
+ * Date: 2025-11-28
  *
  */
 

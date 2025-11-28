@@ -2,7 +2,7 @@
  *
  * File: game.c
  * Author: Eric Strihagen
- * Date: 2025-11-10
+ * Date: 2025-11-28
  *
  * Declaration file: game/game.h
 */
