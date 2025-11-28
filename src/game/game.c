@@ -33,18 +33,6 @@ static inline void draw_pipes() {
     }
 }
 
-
-extern uint8_t* CURRENT_BACK_BUFFER;
-
-void fill_row_fast(uint16_t y, color_t color) {
-    volatile uint8_t* row = CURRENT_BACK_BUFFER + y * SCREEN_WIDTH;
-    uint32_t packed = color.value * 0x01010101; // replicate 8-bit color into 4 bytes
-
-    for (int i = 0; i < SCREEN_WIDTH; i += 4) {
-        *((volatile uint32_t*)(row + i)) = packed;
-    }
-}
-
 void game_draw() {
     // clear the screen
     //PROFILE_BLOCK_AVG("clear", renderer_clear(vga_color_new(2, 5, 3)));
