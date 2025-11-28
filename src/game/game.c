@@ -32,7 +32,19 @@ static inline void draw_pipes() {
         renderer_draw_sprite(&pipes_get(i)->bottom, vga_color_new(0,7,0));
     }
 }
+
+
 extern uint8_t* CURRENT_BACK_BUFFER;
+
+void fill_row_fast(uint16_t y, color_t color) {
+    volatile uint8_t* row = CURRENT_BACK_BUFFER + y * SCREEN_WIDTH;
+    uint32_t packed = color.value * 0x01010101; // replicate 8-bit color into 4 bytes
+
+    for (int i = 0; i < SCREEN_WIDTH; i += 4) {
+        *((volatile uint32_t*)(row + i)) = packed;
+    }
+}
+
 void game_draw() {
     // clear the screen
     //PROFILE_BLOCK_AVG("clear", renderer_clear(vga_color_new(2, 5, 3)));
@@ -40,16 +52,18 @@ void game_draw() {
     //renderer_clear(vga_color_new(2, 5, 3)); // sky blue
 
     // draw the bird
-    PROFILE_BLOCK_AVG("bird", renderer_draw_sprite(bird_get(), vga_color_new(7, 7, 0)));
+    //PROFILE_BLOCK_AVG("bird", renderer_draw_sprite(bird_get(), vga_color_new(7, 7, 0)));
     //renderer_draw_sprite(bird_get(), vga_color_new(7, 7, 0)); // bright yellow
 
     // draw pipes
     PROFILE_BLOCK_AVG("pipes", draw_pipes());
 
     // draw the ground
-    //PROFILE_BLOCK_AVG("ground", renderer_fill_rect(0, SCREEN_HEIGHT - GROUND_HEIGHT, SCREEN_WIDTH, GROUND_HEIGHT, vga_color_new(0, 3, 0)));
     //renderer_fill_rect(0, SCREEN_HEIGHT - GROUND_HEIGHT, SCREEN_WIDTH, GROUND_HEIGHT, vga_color_new(0, 3, 0));
     PROFILE_BLOCK_AVG("ground", draw_ground());
+    //
+
+    PROFILE_BLOCK_AVG("bird", renderer_draw_sprite(bird_get(), vga_color_new(7, 7, 0)));
 
     renderer_present();
 }

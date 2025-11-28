@@ -17,9 +17,28 @@
 #define SCREEN_HEIGHT 240
 #define SCREEN_SIZE   (SCREEN_WIDTH * SCREEN_HEIGHT)
 
-#define FRONT_BUFFER_ADDR ((volatile uint8_t*)0x08000000)
-#define BACK_BUFFER_ADDR  ((volatile uint8_t*)(0x08000000 + SCREEN_WIDTH * SCREEN_HEIGHT))
+#define FRONT_BUFFER_ADDR (0x08000000)
+#define BACK_BUFFER_ADDR  (0x08000000 + SCREEN_SIZE)
 #define DMA_ADDR          ((volatile uint32_t*)0x04000100)
+
+typedef struct {
+    volatile uint32_t swap_bit : 1;
+    volatile uint32_t address_mode : 1;
+    volatile uint32_t color_mode : 4;
+    volatile uint32_t x_addr_cord_width : 16;
+    volatile uint32_t y_addr_cord_width : 16;
+} vga_dma_reg_status_t;
+
+
+typedef struct __attribute__ ((packed)) __attribute__ ((aligned (4))){
+    volatile uint32_t buffer;      // buffer address
+    volatile uint32_t back_buffer; // back buffer address
+    volatile uint16_t resolution_x;
+    volatile uint16_t resolution_y;
+    volatile vga_dma_reg_status_t status;
+} vga_dma_reg_t;
+
+static volatile vga_dma_reg_t* const VGA_DMA = (volatile vga_dma_reg_t*)DMA_ADDR;
 
 /*  Color struct
  *   8 bits
