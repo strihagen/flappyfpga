@@ -13,6 +13,7 @@
 #include "drivers/vga.h"
 #include "game/pipe.h"
 #include "system/profiler.h"
+#include "drivers/seg_display.h"
 
 #include "graphics/font.h"
 
@@ -41,6 +42,16 @@ void game_init() {
 
     font_init();
 }
+
+void game_reset() {
+    GAME_STATE.mode = GAME_STATE_PLAYING;
+    bird_init();
+    pipes_init();
+    GAME_STATE.score = 0;
+    seg_display_set_number(GAME_STATE.score);
+    GAME_STATE.is_running = true;
+}
+
 
 static inline bool box_collision(
     int ax, int ay, int aw, int ah,
@@ -76,7 +87,6 @@ void game_check_collisions() {
         return;
     }
 
-    // CHECK BIRD AND PIPE COLLISION
     // ---------------------------------------
     // 3. Pipe collisions & Scoring
     // ---------------------------------------
@@ -108,10 +118,7 @@ void game_check_collisions() {
         if (!pipe->scored && bird_left > pipe_right_x) {
             GAME_STATE.score++;
             pipe->scored = true;
-            print("\n");
-            print("SCORE: ");
-            print_dec(GAME_STATE.score);
-            print("\n");
+            seg_display_set_number(GAME_STATE.score);
         }
     }
 }

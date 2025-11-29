@@ -37,6 +37,7 @@ typedef struct {
 
 game_state_t* game_state_get();
 void game_init();
+void game_reset();
 void game_check_collisions();
 void game_draw();
 
