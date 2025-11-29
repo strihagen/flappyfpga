@@ -2,7 +2,7 @@
  *
  * File: bird.c
  * Author: Eric Strihagen
- * Date: 2025-11-10
+ * Date: 2025-11-29
  *
  * Declaration file: game/bird.h
 */
@@ -21,16 +21,15 @@ static sprite_t bird;
 
 // 1-bit mask (1 = pixel on, 0 = transparent)
 static const uint8_t bird_bitmap[BIRD_WIDTH * BIRD_HEIGHT] = {
-    0,0,0,1,0,0,0,0,   // head
-    0,0,1,1,1,0,0,0,   // upper body
-    0,1,1,1,1,1,0,0,   // body
-    1,1,1,1,1,1,1,0,   // wings / tail
-    0,1,1,1,1,1,0,0,   // lower body
-    0,0,1,1,1,0,0,0,   // lower tail
-    0,0,0,1,0,0,0,0,   // tail tip
-    0,0,0,0,0,0,0,0    // padding
+    0,0,1,1,1,0,0,0,
+    0,1,1,1,1,1,0,0,
+    1,1,1,1,0,1,1,1,
+    1,1,1,1,1,1,1,0,
+    1,1,1,1,1,1,1,1,
+    0,1,1,1,1,1,0,0,
+    0,0,1,1,1,0,0,0,
+    0,0,0,0,0,0,0,0
 };
-
 
 
 void bird_init() {
