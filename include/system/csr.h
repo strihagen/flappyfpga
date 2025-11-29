@@ -5,7 +5,7 @@
  * CSR Control and Status Register
  *
  * Author: Eric Strihagen
- * Date: 2025-11-13
+ * Date: 2025-11-28
  *
  */
 
@@ -20,6 +20,7 @@ void csr_clear_mstatus_mask(uint32_t mstatus_mask);
 
 uint32_t csr_get_mie(void);
 uint32_t csr_get_mstatus(void);
+uint32_t csr_get_mcycle_low(void);
 
 void csr_read_all_hardware_counters(hwcounters_t *hwc);
 

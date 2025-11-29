@@ -1,5 +1,5 @@
-#ifndef __UTIL_H__
-#define __UTIL_H__
+#ifndef __UTILS_PRIME_H__
+#define __UTILS_PRIME_H__
 
 int nextprime( int inval );
 
