@@ -2,7 +2,7 @@
     * csr_asm.S
     *
     * Author: Eric Strihagen
-    * Date: 2025-11-13
+    * Date: 2025-11-28
     * Description: Assembly code for setting and getting CSRs
 */
 
@@ -43,6 +43,11 @@ csr_get_mstatus:
     # Return to caller
     jr ra
 
+.globl csr_get_mcycle_low
+csr_get_mcycle_low:
+    csrr a0, mcycle
+
+    jr ra
 
 
 /*

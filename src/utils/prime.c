@@ -1,4 +1,4 @@
-#include "util.h"
+#include "utils/prime.h"
 
 /*
  * nextprime
