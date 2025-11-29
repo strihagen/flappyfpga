@@ -8,12 +8,12 @@
 */
 
 
+#include "game/game.h"
 #include "game/pipe.h"
 #include "drivers/vga.h"
+#include "utils/random.h"
 
 #include <stddef.h>
-
-int rand() { return 0; }
 
 static uint8_t pipe_bitmap[PIPE_WIDTH * PIPE_HEIGHT];
 
@@ -31,7 +31,8 @@ static pipe_pair_t pipes[MAX_PIPES];
 
 void pipes_init(void) {
     for (int i = 0; i < MAX_PIPES; i++) {
-        int gap_y = 150 + rand() % (SCREEN_HEIGHT - PIPE_GAP - 30);
+        // 0 to 159
+        int gap_y = rand32() % (SCREEN_HEIGHT - PIPE_GAP - GROUND_HEIGHT);
 
         pipes[i].top.x = 320 + i * PIPE_SPACE;
         pipes[i].top.y = 0;
@@ -39,7 +40,8 @@ void pipes_init(void) {
         pipes[i].top.height = gap_y;
         pipes[i].top.bitmap = pipe_bitmap;
 
-        pipes[i].bottom.x = 320 + i * 100;
+        pipes[i].bottom.x = 320 + i * PIPE_SPACE;
+        // y = 60 to 219
         pipes[i].bottom.y = gap_y + PIPE_GAP;
         pipes[i].bottom.width = PIPE_WIDTH;
         pipes[i].bottom.height = SCREEN_HEIGHT - (gap_y + PIPE_GAP);
@@ -49,25 +51,6 @@ void pipes_init(void) {
     }
 }
 
-/*
-void pipes_update(void) {
-    for (int i = 0; i < MAX_PIPES; i++) {
-        pipes[i].top.x -= 1;
-        pipes[i].bottom.x -= 1;
-
-        if (pipes[i].top.x + PIPE_WIDTH < 0) {
-            pipes[i].top.x = 320;
-            pipes[i].bottom.x = 320;
-
-            int gap_y = 30 + rand() % (SCREEN_HEIGHT - PIPE_GAP - 30);
-            pipes[i].top.height = gap_y;
-            pipes[i].bottom.y = gap_y + PIPE_GAP;
-            pipes[i].bottom.height = SCREEN_HEIGHT - (gap_y + PIPE_GAP);
-            pipes[i].gap_y = gap_y;
-        }
-    }
-}
-*/
 static bool update = true;
 void pipes_update(void) {
     // SLOW DOWN UPDATE
@@ -91,7 +74,7 @@ void pipes_update(void) {
             pipes[i].top.x = max_x + PIPE_WIDTH + PIPE_SPACE;
             pipes[i].bottom.x = pipes[i].top.x;
 
-            int gap_y = 30 + rand() % (SCREEN_HEIGHT - PIPE_GAP - 30);
+            int gap_y = rand32() % (SCREEN_HEIGHT - PIPE_GAP - GROUND_HEIGHT);
             pipes[i].top.height = gap_y;
             pipes[i].bottom.y = gap_y + PIPE_GAP;
             pipes[i].bottom.height = SCREEN_HEIGHT - (gap_y + PIPE_GAP);
