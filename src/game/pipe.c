@@ -2,7 +2,7 @@
  *
  * File: pipe.c
  * Author: Eric Strihagen
- * Date: 2025-11-10
+ * Date: 2025-11-29
  *
  * Declaration file: game/pipe.h
 */
@@ -48,6 +48,8 @@ void pipes_init(void) {
         pipes[i].bottom.bitmap = pipe_bitmap;
 
         pipes[i].gap_y = gap_y;
+
+        pipes[i].scored = false;
     }
 }
 
@@ -79,6 +81,7 @@ void pipes_update(void) {
             pipes[i].bottom.y = gap_y + PIPE_GAP;
             pipes[i].bottom.height = SCREEN_HEIGHT - (gap_y + PIPE_GAP);
             pipes[i].gap_y = gap_y;
+            pipes[i].scored = false;
         }
     }
 }

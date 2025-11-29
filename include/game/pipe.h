@@ -5,13 +5,15 @@
  * Pipe sprite
  *
  * Author: Eric Strihagen
- * Date: 2025-11-10
+ * Date: 2025-11-29
  *
  */
 
 
 #include "graphics/sprite.h"
 #include "game/game.h"
+
+#include <stdbool.h>
 
 #define MAX_PIPES 4
 #define PIPE_WIDTH  20
@@ -23,6 +25,7 @@ typedef struct {
     sprite_t top;    // top pipe sprite
     sprite_t bottom; // bottom pipe sprite
     int gap_y;       // vertical position of the gap
+    bool scored;
 } pipe_pair_t;
 
 void pipes_init(void);
