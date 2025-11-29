@@ -10,6 +10,7 @@
 
 // IO
 #include "drivers/button.h"
+#include "drivers/seg_display.h"
 #include "print.h"
 
 // Game
@@ -29,11 +30,12 @@ int main() {
     renderer_init();
     game_init();
 
+    seg_display_init();
+
     game_state_t* GAME_STATE = game_state_get();
 
     print("[FlappyFPGA] Initialized\n");
 
-    //system_enable_irq(18);
     static int bird_jump_counter = 0;
 
     while (1) {
@@ -50,11 +52,7 @@ int main() {
                 renderer_present();
 
                 if (btn) {
-                    GAME_STATE->mode = GAME_STATE_PLAYING;
-                    bird_init();
-                    pipes_init();
-                    GAME_STATE->score = 0;
-                    GAME_STATE->is_running = true;
+                    game_reset();
                 }
                 break;
 

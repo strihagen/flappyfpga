@@ -51,3 +51,21 @@ void seg_display_clear(uint8_t display_number) {
     SEG_DISPLAYS[display_number]->top_right = 1;
     SEG_DISPLAYS[display_number]->dot = 1;
 }
+
+void seg_display_set_number(uint32_t value) {
+    // Limit value to 6 digits
+    if (value > 999999)
+        value = 999999;
+
+    // Write each digit (right-aligned)
+    for (int i = 0; i < _7SEGMENT_DISPLAY_COUNT; i++) {
+        if (value > 0) {
+            uint8_t digit = value % 10;
+            seg_display_set(i, digit);
+            value /= 10;
+        } else {
+            // Clear remaining upper displays
+            seg_display_clear(i);
+        }
+    }
+}

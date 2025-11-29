@@ -46,5 +46,5 @@ static const uint32_t segments[10] = {
 void seg_display_init();
 void seg_display_set(uint8_t display_number, uint8_t value);
 void seg_display_clear(uint8_t display_number);
-
+void seg_display_set_number(uint32_t value);
 #endif  // __DRIVERS_SEGMENT_DISPLAY_H_
